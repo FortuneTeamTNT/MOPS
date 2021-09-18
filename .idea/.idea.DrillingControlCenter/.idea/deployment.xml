@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="fortune-it-oilchamp.ru" remoteFilesAllowedToDisappearOnAutoupload="false">
+    <serverData>
+      <paths name="fortune-it-oilchamp.ru">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$/DrillingControlCenter.sln" web="/" />
+            <mapping local="$PROJECT_DIR$/DrillingControlCenter/.gitignore" web="/" />
+            <mapping local="$PROJECT_DIR$/DrillingControlCenter/ClientApp/.env" web="/" />
+            <mapping local="$PROJECT_DIR$/DrillingControlCenter/ClientApp/.gitignore" web="/" />
+            <mapping local="$PROJECT_DIR$/DrillingControlCenter/ClientApp/README.md" web="/" />
+            <mapping local="$PROJECT_DIR$/DrillingControlCenter/ClientApp/package-lock.json" web="/" />
+            <mapping local="$PROJECT_DIR$/DrillingControlCenter/ClientApp/package.json" web="/" />
+            <mapping local="$PROJECT_DIR$/DrillingControlCenter/ClientApp/public/favicon.ico" web="/" />
+            <mapping local="$PROJECT_DIR$/DrillingControlCenter/ClientApp/public/index.html" web="/" />
+            <mapping local="$PROJECT_DIR$/DrillingControlCenter/ClientApp/public/manifest.json" web="/" />
+            <mapping local="$PROJECT_DIR$/DrillingControlCenter/ClientApp/src/App.js" web="/" />
+            <mapping local="$PROJECT_DIR$/DrillingControlCenter/ClientApp/src/App.test.js" web="/" />
+            <mapping local="$PROJECT_DIR$/DrillingControlCenter/ClientApp/src/components/Counter.js" web="/" />
+            <mapping local="$PROJECT_DIR$/DrillingControlCenter/ClientApp/src/components/FetchData.js" web="/" />
+            <mapping local="$PROJECT_DIR$/DrillingControlCenter/ClientApp/src/components/Home.js" web="/" />
+            <mapping local="$PROJECT_DIR$/DrillingControlCenter/ClientApp/src/components/Layout.js" web="/" />
+            <mapping local="$PROJECT_DIR$/DrillingControlCenter/ClientApp/src/components/NavMenu.css" web="/" />
+            <mapping local="$PROJECT_DIR$/DrillingControlCenter/ClientApp/src/components/NavMenu.js" web="/" />
+            <mapping local="$PROJECT_DIR$/DrillingControlCenter/ClientApp/src/custom.css" web="/" />
+            <mapping local="$PROJECT_DIR$/DrillingControlCenter/ClientApp/src/index.js" web="/" />
+            <mapping local="$PROJECT_DIR$/DrillingControlCenter/ClientApp/src/registerServiceWorker.js" web="/" />
+            <mapping local="$PROJECT_DIR$/DrillingControlCenter/Controllers/WeatherForecastController.cs" web="/" />
+            <mapping local="$PROJECT_DIR$/DrillingControlCenter/DrillingControlCenter.csproj" web="/" />
+            <mapping local="$PROJECT_DIR$/DrillingControlCenter/Pages/Error.cshtml" web="/" />
+            <mapping local="$PROJECT_DIR$/DrillingControlCenter/Pages/Error.cshtml.cs" web="/" />
+            <mapping local="$PROJECT_DIR$/DrillingControlCenter/Pages/_ViewImports.cshtml" web="/" />
+            <mapping local="$PROJECT_DIR$/DrillingControlCenter/Program.cs" web="/" />
+            <mapping local="$PROJECT_DIR$/DrillingControlCenter/Properties/launchSettings.json" web="/" />
+            <mapping local="$PROJECT_DIR$/DrillingControlCenter/Startup.cs" web="/" />
+            <mapping local="$PROJECT_DIR$/DrillingControlCenter/WeatherForecast.cs" web="/" />
+            <mapping local="$PROJECT_DIR$/DrillingControlCenter/appsettings.Development.json" web="/" />
+            <mapping local="$PROJECT_DIR$/DrillingControlCenter/appsettings.json" web="/" />
+            <mapping local="$PROJECT_DIR$/DrillingControlCenter/drilling.db" web="/" />
+            <mapping local="$PROJECT_DIR$/DrillingControlCenter/obj/Debug/net5.0/DrillingControlCenter.AssemblyInfo.cs" web="/" />
+            <mapping local="$PROJECT_DIR$/DrillingControlCenter/obj/Debug/net5.0/DrillingControlCenter.RazorAssemblyInfo.cs" web="/" />
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>
