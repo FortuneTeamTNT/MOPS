@@ -12,5 +12,6 @@
     </ul>
 </div>
 
-Прототип разработан с помощью ASP.NET with React.js
-Используется локальная БД LiteDB (NoSQL)
+Прототип разработан с помощью ASP.NET with React.js.
+<br/>
+Используется локальная БД LiteDB (NoSQL).
