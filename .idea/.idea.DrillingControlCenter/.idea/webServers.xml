@@ -2,7 +2,7 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="9c9c8a1b-d37d-4d40-86c5-4e35b2917a4a" name="fortune-it-oilchamp.ru" url="http://fortune-it-oilchamp.ru">
+      <webServer id="9c9c8a1b-d37d-4d40-86c5-4e35b2917a4a" name="fortune-it-oilchamp.ru" url="https://fortune-it-oilchamp.ru">
         <fileTransfer rootFolder="/fortune" host="31.31.196.234" port="21">
           <advancedOptions>
             <advancedOptions passiveMode="true" />
