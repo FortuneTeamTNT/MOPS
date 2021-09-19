@@ -11,6 +11,7 @@ export class BounceTree extends Component {
         return (
             <div>
                 <h3>Дерево отказов</h3>
+                <img alt="" src="/bounce_tree.png"/>
             </div>
         );
     }
