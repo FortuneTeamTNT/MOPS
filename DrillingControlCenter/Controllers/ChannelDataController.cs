@@ -53,7 +53,7 @@ namespace DrillingControlCenter.Controllers
                                     var recStr = "";
                                     if (rec == 1)
                                     {
-                                        recStr = "Выполнить tracert";
+                                        recStr = "Сделать трассировку до узла";
                                     }
                                     else if (rec == 2)
                                     {
