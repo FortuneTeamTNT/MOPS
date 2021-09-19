@@ -1,4 +1,6 @@
 ﻿import React, {Component} from 'react';
+import { serverchartdata } from './servercharts.js';
+import { bitloaddata } from './bitloads.js';
 
 import {
     Chart,
@@ -45,13 +47,13 @@ export class Monitoring extends Component {
     }
 
     async populateData() {
-        const response = await fetch('serverchartdata');
-        const data = await response.json();
-        this.setState({servercharts: data});
+        // const response = await fetch('serverchartdata');
+        // const data = await response.json();
+        this.setState({servercharts: serverchartdata});
 
-        const response2 = await fetch('bitloaddata');
-        const data2 = await response2.json();
-        this.setState({bitloads: data2});
+        // const response2 = await fetch('bitloaddata');
+        // const data2 = await response2.json();
+        this.setState({bitloads: bitloaddata});
     }
 
     render() {
@@ -165,10 +167,10 @@ export class Monitoring extends Component {
     };
 
     async getData(formData) {
-        const response = await axios.post("serverchartdata", formData, {
-            headers: {'Content-Type': 'multipart/form-data'}
-        });
-        const data = await response.data;
-        this.setState({servercharts: data, loading: false});
+        // const response = await axios.post("serverchartdata", formData, {
+        //     headers: {'Content-Type': 'multipart/form-data'}
+        // });
+        // const data = await response.data;
+        this.setState({servercharts: serverchartdata, loading: false});
     }
 }

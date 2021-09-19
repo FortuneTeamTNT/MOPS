@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, {Component} from 'react';
 import {Button} from "devextreme-react";
+import { channeldata } from './channels.js';
 
 export class ChannelData extends Component {
     static displayName = ChannelData.name;
@@ -65,9 +66,9 @@ export class ChannelData extends Component {
     }
 
     async populateChannelData() {
-        const response = await fetch('channeldata');
-        const data = await response.json();
-        this.setState({channels: data, loading: false});
+        // const response = await fetch('channeldata');
+        // const data = await response.json();
+        this.setState({channels: channeldata, loading: false});
     }
 
     onFileChange = event => {
@@ -96,10 +97,10 @@ export class ChannelData extends Component {
     };
 
     async getData(formData) {
-        const response = await axios.post("channeldata", formData, {
-            headers: {'Content-Type': 'multipart/form-data'}
-        });
-        const data = await response.data;
-        this.setState({channels: data, loading: false});
+        // const response = await axios.post("channeldata", formData, {
+        //     headers: {'Content-Type': 'multipart/form-data'}
+        // });
+        // const data = await response.data;
+        this.setState({channels: channeldata, loading: false});
     }
 }

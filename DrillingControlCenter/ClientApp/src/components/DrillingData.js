@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, {Component} from 'react';
 import {Button} from "devextreme-react";
+import { bitloaddata } from './bitloads.js';
 
 export class DrillingData extends Component {
     static displayName = DrillingData.name;
@@ -61,9 +62,9 @@ export class DrillingData extends Component {
     }
 
     async populateBitLoadData() {
-        const response = await fetch('bitloaddata');
-        const data = await response.json();
-        this.setState({bitloads: data, loading: false});
+        // const response = await fetch('bitloaddata');
+        // const data = await response.json();
+        this.setState({bitloads: bitloaddata, loading: false});
     }
 
     onFileChange = event => {
@@ -92,10 +93,10 @@ export class DrillingData extends Component {
     };
 
     async getData(formData) {
-        const response = await axios.post("bitloaddata", formData, {
-            headers: {'Content-Type': 'multipart/form-data'}
-        });
-        const data = await response.data;
-        this.setState({bitloads: data, loading: false});
+        // const response = await axios.post("bitloaddata", formData, {
+        //     headers: {'Content-Type': 'multipart/form-data'}
+        // });
+        // const data = await response.data;
+        this.setState({bitloads: bitloaddata, loading: false});
     }
 }

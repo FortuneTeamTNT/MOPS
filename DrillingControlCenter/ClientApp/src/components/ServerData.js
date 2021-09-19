@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, {Component} from 'react';
 import {Button} from "devextreme-react";
+import { serverdata } from './servers.js';
 
 export class ServerData extends Component {
     static displayName = ServerData.name;
@@ -63,9 +64,9 @@ export class ServerData extends Component {
     }
 
     async populateServerData() {
-        const response = await fetch('serverdata');
-        const data = await response.json();
-        this.setState({servers: data, loading: false});
+        // const response = await fetch('serverdata');
+        // const data = await response.json();
+        this.setState({servers: serverdata, loading: false});
     }
 
     onFileChange = event => {
@@ -94,10 +95,10 @@ export class ServerData extends Component {
     };
 
     async getData(formData) {
-        const response = await axios.post("serverdata", formData, {
-            headers: {'Content-Type': 'multipart/form-data'}
-        });
-        const data = await response.data;
-        this.setState({servers: data, loading: false});
+        // const response = await axios.post("serverdata", formData, {
+        //     headers: {'Content-Type': 'multipart/form-data'}
+        // });
+        // const data = await response.data;
+        this.setState({servers: serverdata, loading: false});
     }
 }
