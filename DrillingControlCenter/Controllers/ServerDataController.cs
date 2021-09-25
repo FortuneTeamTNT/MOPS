@@ -16,7 +16,7 @@ namespace DrillingControlCenter.Controllers
         [HttpGet]
         public IEnumerable<ServerData> Get()
         {
-            using var db = new LiteDatabase(@"drilling.db");
+            var db = Program.GetDatabase();
             var col = db.GetCollection<ServerData>("servers");
 
             return col.Query().ToList();
@@ -27,7 +27,7 @@ namespace DrillingControlCenter.Controllers
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
-            using var db = new LiteDatabase(@"drilling.db");
+            var db = Program.GetDatabase();
             var col = db.GetCollection<ServerData>("servers");
             col.DeleteAll();
 

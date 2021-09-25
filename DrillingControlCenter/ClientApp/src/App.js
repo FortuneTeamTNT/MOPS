@@ -4,10 +4,8 @@ import {Layout} from './components/Layout';
 import {Home} from './components/Home';
 import {Monitoring} from './components/Monitoring';
 import {Analytics} from './components/Analytics';
-import {ServerData} from './components/ServerData';
-import {ChannelData} from "./components/ChannelData";
-import {DrillingData} from "./components/DrillingData";
 import {BounceTree} from "./components/BounceTree";
+import {ItData} from "./components/ItData";
 
 import './custom.css'
 import 'devextreme/dist/css/dx.light.css';
@@ -19,12 +17,10 @@ export default class App extends Component {
         return (
             <Layout>
                 <Route exact path='/' component={Home}/>
+                <Route path='/it-data' component={ItData}/>
                 <Route path='/monitoring' component={Monitoring}/>
-                <Route path='/analytics' component={Analytics}/>
-                <Route path='/server-data' component={ServerData}/>
-                <Route path='/channel-data' component={ChannelData}/>
-                <Route path='/drilling-data' component={DrillingData}/>
                 <Route path='/bounce-tree' component={BounceTree}/>
+                <Route path='/analytics' component={Analytics}/>
             </Layout>
         );
     }

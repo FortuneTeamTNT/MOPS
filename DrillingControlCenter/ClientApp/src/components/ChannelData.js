@@ -2,52 +2,85 @@ import axios from 'axios';
 import React, {Component} from 'react';
 import {Button} from "devextreme-react";
 
+import DataGrid, {Column, Scrolling, Pager, Paging, HeaderFilter} from 'devextreme-react/data-grid';
+import './Styles.css';
+
+const allowedPageSizes = [5, 10, 'all'];
+
 export class ChannelData extends Component {
     static displayName = ChannelData.name;
 
     constructor(props) {
         super(props);
-        this.state = {channels: [], loading: true, selectedFile: null};
+        this.state = {
+            channels: [],
+            loading: true,
+            selectedFile: null,
+            displayMode: 'compact',
+            showPageSizeSelector: true,
+            showInfo: true,
+            showNavButtons: true
+        };
     }
 
     componentDidMount() {
         this.populateChannelData();
     }
 
-    static renderChannelTable(channels) {
+    static renderChannelTable(channels,
+                              displayMode,
+                              showPageSizeSelector,
+                              showInfo,
+                              showNavButtons) {
         return (
-            <table className='table' aria-labelledby="tabelLabel">
-                <thead>
-                <tr>
-                    <th>Дата</th>
-                    <th>ИС</th>
-                    <th>Время отклика сетевого устройства</th>
-                    <th>Процент потери сетевого устройства</th>
-                    <th>Предупреждение</th>
-                    <th>Рекомендация</th>
-                </tr>
-                </thead>
-                <tbody>
-                {channels.map(channel =>
-                    <tr style={channel.rec === 2 ? {background: 'orangered'} : (channel.rec === 1 ? {background: 'lightyellow'} : {})}
-                        key={channel.date}>
-                        <td style={{minWidth: '9rem'}}>{channel.dateString}</td>
-                        <td>{channel.system}</td>
-                        <td>{channel.responseTime}</td>
-                        <td>{channel.packetLossPercentage}</td>
-                        <td>{channel.alert}</td>
-                        <td>{channel.recommendation}</td>
-                    </tr>
-                )}
-                </tbody>
-            </table>
+            <div>
+                <DataGrid
+                    id='gridContainer'
+                    dataSource={channels}
+                    keyExpr="date"
+                    showBorders={true}
+                >
+                    <HeaderFilter visible={true}/>
+                    <Column caption="Дата" dataField="dateString" cellRender={cellRender} width={8 + 'rem'}/>
+                    <Column caption="Система" dataField="system" cellRender={cellRender} width={12 + 'rem'}/>
+                    <Column caption="Время отклика сетевого устройства" dataField="responseTime" cellRender={cellRender}
+                            width={10 + 'rem'}/>
+                    <Column caption="Процент потери сетевого устройства" dataField="packetLossPercentage"
+                            cellRender={cellRender} width={10 + 'rem'}/>
+                    <Column caption="Предупреждение" dataField="alert" cellRender={cellRender} width={10 + 'rem'}/>
+                    <Column caption="Рекомендация" dataField="recommendation" cellRender={cellRender}/>
+                    <Scrolling rowRenderingMode='virtual'></Scrolling>
+                    <Paging defaultPageSize={10}/>
+                    <Pager
+                        visible={true}
+                        allowedPageSizes={allowedPageSizes}
+                        displayMode={displayMode}
+                        showPageSizeSelector={showPageSizeSelector}
+                        showInfo={showInfo}
+                        showNavigationButtons={showNavButtons}/>
+                </DataGrid>
+            </div>
         );
+
+        function cellRender(cellData) {
+            return <div style={cellData.data.rec === 2 ?
+                {whiteSpace: 'pre-wrap', color: 'orangered', height: 2 + 'rem'} : (cellData.data.rec === 1 ?
+                    {
+                        whiteSpace: 'pre-wrap',
+                        color: 'yellowgreen',
+                        height: 2 + 'rem'
+                    } : {height: 2 + 'rem'})}>{cellData.value}</div>;
+        }
     }
 
     render() {
         let contents = this.state.loading
             ? <p><em>Загрузка...</em></p>
-            : ChannelData.renderChannelTable(this.state.channels);
+            : ChannelData.renderChannelTable(this.state.channels,
+                this.state.displayMode,
+                this.state.showPageSizeSelector,
+                this.state.showInfo,
+                this.state.showNavButtons);
 
         return (
             <div>

@@ -1,51 +1,84 @@
 import axios from 'axios';
 import React, {Component} from 'react';
 import {Button} from "devextreme-react";
+import DataGrid, {Column, Scrolling, Pager, Paging, HeaderFilter} from 'devextreme-react/data-grid';
+import './Styles.css';
+
+const allowedPageSizes = [5, 10, 'all'];
 
 export class ServerData extends Component {
     static displayName = ServerData.name;
 
     constructor(props) {
         super(props);
-        this.state = {servers: [], loading: true, selectedFile: null};
+        this.state = {
+            servers: [],
+            loading: true,
+            selectedFile: null,
+            displayMode: 'compact',
+            showPageSizeSelector: true,
+            showInfo: true,
+            showNavButtons: true
+        };
     }
 
     componentDidMount() {
         this.populateServerData();
     }
 
-    static renderServerTable(servers) {
+    static renderServerTable(servers,
+                             displayMode,
+                             showPageSizeSelector,
+                             showInfo,
+                             showNavButtons) {
         return (
-            <table className='table' aria-labelledby="tabelLabel">
-                <thead>
-                <tr>
-                    <th>Дата</th>
-                    <th>ИС</th>
-                    <th>Объем свободного места на диске</th>
-                    <th>Предупреждение</th>
-                    <th>Рекомендация</th>
-                </tr>
-                </thead>
-                <tbody>
-                {servers.map(server =>
-                    <tr style={server.alert === 2 ? {background: 'orangered'} : (server.alert === 1 ? {background: 'lightyellow'} : {})}
-                        key={server.date}>
-                        <td style={{minWidth: '9rem'}}>{server.dateString}</td>
-                        <td>{server.system}</td>
-                        <td>{server.freeDiskSpace}</td>
-                        <td>{server.alert}</td>
-                        <td>{server.recommendation}</td>
-                    </tr>
-                )}
-                </tbody>
-            </table>
+            <div>
+                <DataGrid
+                    id='gridContainer'
+                    dataSource={servers}
+                    keyExpr="date"
+                    showBorders={true}
+                >
+                    <HeaderFilter visible={true}/>
+                    <Column caption="Дата" dataField="dateString" cellRender={cellRender} width={8 + 'rem'}/>
+                    <Column caption="Система" dataField="system" cellRender={cellRender} width={12 + 'rem'}/>
+                    <Column caption="Свободное место на диске" dataField="freeDiskSpace" cellRender={cellRender}
+                            width={10 + 'rem'}/>
+                    <Column caption="Предупреждение" dataField="alert" cellRender={cellRender} width={10 + 'rem'}/>
+                    <Column caption="Рекомендация" dataField="recommendation" cellRender={cellRender}/>
+                    <Scrolling rowRenderingMode='virtual'></Scrolling>
+                    <Paging defaultPageSize={10}/>
+                    <Pager
+                        visible={true}
+                        allowedPageSizes={allowedPageSizes}
+                        displayMode={displayMode}
+                        showPageSizeSelector={showPageSizeSelector}
+                        showInfo={showInfo}
+                        showNavigationButtons={showNavButtons}/>
+                </DataGrid>
+            </div>
         );
+
+        function cellRender(cellData) {
+            return <div style={cellData.data.alert === 2 ?
+                {whiteSpace: 'pre-wrap', color: 'orangered', height: 2 + 'rem'} : (cellData.data.alert === 1 ?
+                    {
+                        whiteSpace: 'pre-wrap',
+                        color: 'yellowgreen',
+                        height: 2 + 'rem'
+                    } : {height: 2 + 'rem'})}>{cellData.value}</div>;
+        }
     }
 
     render() {
         let contents = this.state.loading
             ? <p><em>Загрузка...</em></p>
-            : ServerData.renderServerTable(this.state.servers);
+            : ServerData.renderServerTable(
+                this.state.servers,
+                this.state.displayMode,
+                this.state.showPageSizeSelector,
+                this.state.showInfo,
+                this.state.showNavButtons);
 
         return (
             <div>

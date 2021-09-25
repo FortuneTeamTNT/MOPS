@@ -1,4 +1,4 @@
-﻿import React, {Component} from 'react';
+﻿import React from 'react';
 
 import {
     Chart,
@@ -14,8 +14,16 @@ import {
     Label,
     Format
 } from 'devextreme-react/chart';
-import {Button} from "devextreme-react";
+import {Tabs} from "devextreme-react";
 import axios from "axios";
+
+export const tabs = [{
+    'id': 1,
+    'text': 'ИТ-мониторинг'
+}, {
+    'id': 2,
+    'text': "Мониторинг буровой"
+}];
 
 export const systems = [
     {value: 'freeDiskSpace1', name: 'Petrel'},
@@ -27,17 +35,18 @@ export const values = [
     {value: 'bitLoad', name: 'Нагрузка на долото'}
 ];
 
-export class Monitoring extends Component {
+export class Monitoring extends React.Component {
     static displayName = Monitoring.name;
 
     constructor(props) {
         super(props);
-
         this.state = {
+            selectedIndex: 0,
             type: 'spline',
             servercharts: [],
             bitloads: []
         };
+        this.onTabsSelectionChanged = this.onTabsSelectionChanged.bind(this);
     }
 
     componentDidMount() {
@@ -55,88 +64,98 @@ export class Monitoring extends Component {
     }
 
     render() {
+        const {selectedIndex, servercharts, bitloads} = this.state;
         return (
-            <div>
-                <div>
-                    <input type="file" onChange={this.onFileChange}/>
-                    <Button text="Загрузить" onClick={this.onFileUpload}/>
-                    {" "}
-                    <Button text="Очистить" onClick={this.onDeleteData}/>
+            <div style={{maxWidth: 1100 + 'px'}}>
+                <Tabs
+                    dataSource={tabs}
+                    selectedIndex={selectedIndex}
+                    onOptionChanged={this.onTabsSelectionChanged}
+                />
+                <div style={selectedIndex === 0 ? {} : {visibility: 'hidden', height: 0 + 'rem'}}>
+                    <React.Fragment>
+                        <Chart
+                            palette="Violet"
+                            dataSource={servercharts}
+                            title="Объем свободного места на диске"
+                        >
+                            <CommonSeriesSettings
+                                argumentField="dateString"
+                                type={this.state.type}
+                            />
+                            <CommonAxisSettings>
+                                <Grid visible={true}/>
+                            </CommonAxisSettings>
+                            {
+                                systems.map(function (item) {
+                                    return <Series key={item.value} valueField={item.value} name={item.name}/>;
+                                })
+                            }
+                            <Margin bottom={20}/>
+                            <ArgumentAxis
+                                allowDecimals={false}
+                                axisDivisionFactor={60}
+                            >
+                                <Label>
+                                    <Format type="decimal"/>
+                                </Label>
+                            </ArgumentAxis>
+                            <Legend
+                                verticalAlignment="top"
+                                horizontalAlignment="right"
+                            />
+                            <Export enabled={true}/>
+                            <Tooltip enabled={true}/>
+                        </Chart>
+                    </React.Fragment>
                 </div>
-
-                <React.Fragment>
-                    <Chart
-                        palette="Violet"
-                        dataSource={this.state.servercharts}
-                        title="Объем свободного места на диске"
-                    >
-                        <CommonSeriesSettings
-                            argumentField="dateString"
-                            type={this.state.type}
-                        />
-                        <CommonAxisSettings>
-                            <Grid visible={true}/>
-                        </CommonAxisSettings>
-                        {
-                            systems.map(function (item) {
-                                return <Series key={item.value} valueField={item.value} name={item.name}/>;
-                            })
-                        }
-                        <Margin bottom={20}/>
-                        <ArgumentAxis
-                            allowDecimals={false}
-                            axisDivisionFactor={60}
+                <div style={selectedIndex === 1 ? {} : {visibility: 'hidden', height: 0 + 'rem'}}>
+                    <React.Fragment>
+                        <Chart
+                            palette="Violet"
+                            dataSource={bitloads}
+                            title="Нагрузка на долото"
                         >
-                            <Label>
-                                <Format type="decimal"/>
-                            </Label>
-                        </ArgumentAxis>
-                        <Legend
-                            verticalAlignment="top"
-                            horizontalAlignment="right"
-                        />
-                        <Export enabled={true}/>
-                        <Tooltip enabled={true}/>
-                    </Chart>
-                </React.Fragment>
-
-                <React.Fragment>
-                    <Chart
-                        palette="Violet"
-                        dataSource={this.state.bitloads}
-                        title="Нагрузка на долото"
-                    >
-                        <CommonSeriesSettings
-                            argumentField="dateString"
-                            type={this.state.type}
-                        />
-                        <CommonAxisSettings>
-                            <Grid visible={true}/>
-                        </CommonAxisSettings>
-                        {
-                            values.map(function (item) {
-                                return <Series key={item.value} valueField={item.value} name={item.name}/>;
-                            })
-                        }
-                        <Margin bottom={20}/>
-                        <ArgumentAxis
-                            allowDecimals={false}
-                            axisDivisionFactor={60}
-                        >
-                            <Label>
-                                <Format type="decimal"/>
-                            </Label>
-                        </ArgumentAxis>
-                        <Legend
-                            verticalAlignment="top"
-                            horizontalAlignment="right"
-                        />
-                        <Export enabled={true}/>
-                        <Tooltip enabled={true}/>
-                    </Chart>
-                </React.Fragment>
+                            <CommonSeriesSettings
+                                argumentField="dateString"
+                                type={this.state.type}
+                            />
+                            <CommonAxisSettings>
+                                <Grid visible={true}/>
+                            </CommonAxisSettings>
+                            {
+                                values.map(function (item) {
+                                    return <Series key={item.value} valueField={item.value} name={item.name}/>;
+                                })
+                            }
+                            <Margin bottom={20}/>
+                            <ArgumentAxis
+                                allowDecimals={false}
+                                axisDivisionFactor={60}
+                            >
+                                <Label>
+                                    <Format type="decimal"/>
+                                </Label>
+                            </ArgumentAxis>
+                            <Legend
+                                verticalAlignment="top"
+                                horizontalAlignment="right"
+                            />
+                            <Export enabled={true}/>
+                            <Tooltip enabled={true}/>
+                        </Chart>
+                    </React.Fragment>
+                </div>
             </div>
         );
+    }
+
+    onTabsSelectionChanged(args) {
+        if (args.name === 'selectedIndex') {
+            this.setState({
+                selectedIndex: args.value
+            });
+        }
     }
 
     onFileChange = event => {
