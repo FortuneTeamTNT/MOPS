@@ -60,7 +60,7 @@ export class ServerData extends Component {
         );
 
         function cellRender(cellData) {
-            return <div style={cellData.data.alert === 2 ?
+            return <div style={cellData.data.alert >= 2 ?
                 {whiteSpace: 'pre-wrap', color: 'orangered', height: 2 + 'rem'} : (cellData.data.alert === 1 ?
                     {
                         whiteSpace: 'pre-wrap',
@@ -83,12 +83,12 @@ export class ServerData extends Component {
         return (
             <div>
                 <h5 id="tabelLabel">Сбой серверов</h5>
-                <div>
-                    <input type="file" onChange={this.onFileChange}/>
-                    <Button text="Загрузить" onClick={this.onFileUpload}/>
-                    {" "}
-                    <Button text="Очистить" onClick={this.onDeleteData}/>
-                </div>
+                {/*<div>*/}
+                {/*    <input type="file" onChange={this.onFileChange}/>*/}
+                {/*    <Button text="Загрузить" onClick={this.onFileUpload}/>*/}
+                {/*    {" "}*/}
+                {/*    <Button text="Очистить" onClick={this.onDeleteData}/>*/}
+                {/*</div>*/}
                 <p/>
                 {contents}
             </div>

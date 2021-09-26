@@ -49,26 +49,36 @@ namespace DrillingControlCenter.Controllers
                                         break;
                                     }
 
-                                    var rec = int.Parse(reader.GetValue(5).ToString() ?? "0");
-                                    var recStr = "";
-                                    if (rec == 1)
+                                    var responseTime = double.Parse(reader.GetValue(1).ToString() ?? "0");
+
+                                    var alert = 0;
+                                    var recommendation = "";
+
+                                    if (responseTime is > 0 and <= 10)
                                     {
-                                        recStr = "Выполнить трассировку до узла";
+                                        alert = 1;
+                                        recommendation = @"Время отклика в пределах нормы.
+Каналы связи работают в штатном режиме. Время отклика в пределах нормы: от 0 до 10 мс.";
                                     }
-                                    else if (rec == 2)
+                                    else if (responseTime is > 10 and <= 25)
                                     {
-                                        recStr = "Использовать резервный канал";
+                                        alert = 2;
+                                        recommendation = @"Важно! Время отклика в критических пределах.
+Каналы связи работают на предельных значениях. В них фиксируется большое количество потерь пакетов данных. Система автоматически создала обращение на группу техподдержки для поиска и устранения причин сбоев.";
+                                    }
+                                    else if (responseTime is > 25 and <= 100)
+                                    {
+                                        alert = 3;
+                                        recommendation = @"Критично! Потеря связи!
+Текст: Авария на каналах связи. Система автоматически создала обращение на группу техподдержки устранения причин сбоев.";
                                     }
 
                                     var data = new ChannelData()
                                     {
                                         Date = DateTime.Parse(reader.GetValue(0).ToString() ?? string.Empty),
-                                        System = reader.GetValue(1).ToString(),
-                                        ResponseTime = double.Parse(reader.GetValue(2).ToString() ?? "0"),
-                                        PacketLossPercentage = double.Parse(reader.GetValue(3).ToString() ?? "0"),
-                                        Alert = int.Parse(reader.GetValue(4).ToString() ?? "0"),
-                                        Rec = rec,
-                                        Recommendation = recStr
+                                        ResponseTime = responseTime,
+                                        Alert = alert,
+                                        Recommendation = recommendation
                                     };
 
                                     col.Insert(data);

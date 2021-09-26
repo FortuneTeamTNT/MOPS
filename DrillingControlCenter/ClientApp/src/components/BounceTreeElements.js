@@ -1,6 +1,4 @@
-﻿import React from 'react';
-
-export default [
+﻿export default [
     {
         id: '1',
         type: 'input',

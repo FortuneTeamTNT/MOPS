@@ -44,10 +44,11 @@ export class NavMenu extends Component {
                                     <NavLink tag={Link} className="text-dark" to="/monitoring">Мониторинг</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink tag={Link} className="text-dark" to="/bounce-tree">Дерево отказов</NavLink>
+                                    <NavLink tag={Link} className="text-dark" to="/analytic-data">Аналитика</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink tag={Link} className="text-dark" to="/analytics">Аналитика</NavLink>
+                                    <NavLink tag={Link} className="text-dark" to="/reference-data">Справочные
+                                        данные</NavLink>
                                 </NavItem>
                             </ul>
                         </Collapse>

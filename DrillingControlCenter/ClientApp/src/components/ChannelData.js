@@ -45,8 +45,6 @@ export class ChannelData extends Component {
                     <Column caption="Система" dataField="system" cellRender={cellRender} width={12 + 'rem'}/>
                     <Column caption="Время отклика сетевого устройства" dataField="responseTime" cellRender={cellRender}
                             width={10 + 'rem'}/>
-                    <Column caption="Процент потери сетевого устройства" dataField="packetLossPercentage"
-                            cellRender={cellRender} width={10 + 'rem'}/>
                     <Column caption="Предупреждение" dataField="alert" cellRender={cellRender} width={10 + 'rem'}/>
                     <Column caption="Рекомендация" dataField="recommendation" cellRender={cellRender}/>
                     <Scrolling rowRenderingMode='virtual'></Scrolling>
@@ -63,8 +61,8 @@ export class ChannelData extends Component {
         );
 
         function cellRender(cellData) {
-            return <div style={cellData.data.rec === 2 ?
-                {whiteSpace: 'pre-wrap', color: 'orangered', height: 2 + 'rem'} : (cellData.data.rec === 1 ?
+            return <div style={cellData.data.alert >= 2 ?
+                {whiteSpace: 'pre-wrap', color: 'orangered', height: 2 + 'rem'} : (cellData.data.alert === 1 ?
                     {
                         whiteSpace: 'pre-wrap',
                         color: 'yellowgreen',
@@ -85,12 +83,12 @@ export class ChannelData extends Component {
         return (
             <div>
                 <h5 id="tabelLabel">Сбой каналов связи</h5>
-                <div>
-                    <input type="file" onChange={this.onFileChange}/>
-                    <Button text="Загрузить" onClick={this.onFileUpload}/>
-                    {" "}
-                    <Button text="Очистить" onClick={this.onDeleteData}/>
-                </div>
+                {/*<div>*/}
+                {/*    <input type="file" onChange={this.onFileChange}/>*/}
+                {/*    <Button text="Загрузить" onClick={this.onFileUpload}/>*/}
+                {/*    {" "}*/}
+                {/*    <Button text="Очистить" onClick={this.onDeleteData}/>*/}
+                {/*</div>*/}
                 <p/>
                 {contents}
             </div>

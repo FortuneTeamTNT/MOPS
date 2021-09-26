@@ -1,6 +1,6 @@
 ﻿import React, {Component, useState} from 'react';
 
-import ReactFlow, {addEdge, Background, Controls, MiniMap, removeElements} from 'react-flow-renderer';
+import ReactFlow, {addEdge, Background, Controls, removeElements} from 'react-flow-renderer';
 
 import treeElements from './BounceTreeElements';
 

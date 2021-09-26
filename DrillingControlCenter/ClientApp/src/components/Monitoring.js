@@ -14,7 +14,7 @@ import {
     Label,
     Format
 } from 'devextreme-react/chart';
-import {Tabs} from "devextreme-react";
+import {Tabs, TextArea} from "devextreme-react";
 import axios from "axios";
 
 export const tabs = [{
@@ -24,6 +24,10 @@ export const tabs = [{
     'id': 2,
     'text': "Мониторинг буровой"
 }];
+
+export const responseTimes = [
+    {value: 'responseTime', name: 'Время отклика сетевого устройства'},
+];
 
 export const systems = [
     {value: 'freeDiskSpace1', name: 'Petrel'},
@@ -43,8 +47,11 @@ export class Monitoring extends React.Component {
         this.state = {
             selectedIndex: 0,
             type: 'spline',
+            channels: [],
             servercharts: [],
-            bitloads: []
+            bitloads: [],
+            channelRecs: "",
+            bitloadRecs: ""
         };
         this.onTabsSelectionChanged = this.onTabsSelectionChanged.bind(this);
     }
@@ -54,97 +61,164 @@ export class Monitoring extends React.Component {
     }
 
     async populateData() {
-        const response = await fetch('serverchartdata');
+        const response = await fetch('channeldata');
         const data = await response.json();
-        this.setState({servercharts: data});
+        this.setState({channels: data});
 
-        const response2 = await fetch('bitloaddata');
+        let channelRecs = "";
+        const channelRecsArray = data.filter(d => d.alert !== 0);
+        channelRecsArray.forEach(d => channelRecs += d.dateString + ": " + d.recommendation + "\n\n");
+        this.setState({channelRecs: channelRecs});
+
+        const response2 = await fetch('serverchartdata');
         const data2 = await response2.json();
-        this.setState({bitloads: data2});
+        this.setState({servercharts: data2});
+
+        const response3 = await fetch('bitloaddata');
+        const data3 = await response3.json();
+        this.setState({bitloads: data3});
+
+        let bitloadRecs = "";
+        const bitloadRecsArray = data3.filter(d => d.alert !== 0);
+        bitloadRecsArray.forEach(d => bitloadRecs += d.dateString + ": " + d.recommendation + "\n\n");
+        this.setState({bitloadRecs: bitloadRecs});
     }
 
     render() {
-        const {selectedIndex, servercharts, bitloads} = this.state;
+        const {selectedIndex, channels, servercharts, bitloads, channelRecs, bitloadRecs} = this.state;
         return (
-            <div style={{maxWidth: 1100 + 'px'}}>
+            <div>
                 <Tabs
                     dataSource={tabs}
                     selectedIndex={selectedIndex}
                     onOptionChanged={this.onTabsSelectionChanged}
                 />
-                <div style={selectedIndex === 0 ? {} : {visibility: 'hidden', height: 0 + 'rem'}}>
-                    <React.Fragment>
-                        <Chart
-                            palette="Violet"
-                            dataSource={servercharts}
-                            title="Объем свободного места на диске"
-                        >
-                            <CommonSeriesSettings
-                                argumentField="dateString"
-                                type={this.state.type}
-                            />
-                            <CommonAxisSettings>
-                                <Grid visible={true}/>
-                            </CommonAxisSettings>
-                            {
-                                systems.map(function (item) {
-                                    return <Series key={item.value} valueField={item.value} name={item.name}/>;
-                                })
-                            }
-                            <Margin bottom={20}/>
-                            <ArgumentAxis
-                                allowDecimals={false}
-                                axisDivisionFactor={60}
+                <div className={'row'} style={selectedIndex === 0 ? {} : {visibility: 'hidden', height: 0 + 'rem'}}>
+                    <div className={'col-sm-10'}>
+                        <React.Fragment>
+                            <Chart
+                                palette="Violet"
+                                dataSource={channels}
+                                title="Состояние каналов связи"
                             >
-                                <Label>
-                                    <Format type="decimal"/>
-                                </Label>
-                            </ArgumentAxis>
-                            <Legend
-                                verticalAlignment="top"
-                                horizontalAlignment="right"
-                            />
-                            <Export enabled={true}/>
-                            <Tooltip enabled={true}/>
-                        </Chart>
-                    </React.Fragment>
+                                <CommonSeriesSettings
+                                    argumentField="dateString"
+                                    type={this.state.type}
+                                />
+                                <CommonAxisSettings>
+                                    <Grid visible={true}/>
+                                </CommonAxisSettings>
+                                {
+                                    responseTimes.map(function (item) {
+                                        return <Series key={item.value} valueField={item.value} name={item.name}/>;
+                                    })
+                                }
+                                <Margin bottom={20}/>
+                                <ArgumentAxis
+                                    allowDecimals={false}
+                                    axisDivisionFactor={60}
+                                >
+                                    <Label>
+                                        <Format type="decimal"/>
+                                    </Label>
+                                </ArgumentAxis>
+                                <Legend
+                                    verticalAlignment="top"
+                                    horizontalAlignment="right"
+                                />
+                                <Export enabled={true}/>
+                                <Tooltip enabled={true}/>
+                            </Chart>
+                        </React.Fragment>
+                        <React.Fragment>
+                            <Chart
+                                palette="Violet"
+                                dataSource={servercharts}
+                                title="Объем свободного места на диске"
+                            >
+                                <CommonSeriesSettings
+                                    argumentField="dateString"
+                                    type={this.state.type}
+                                />
+                                <CommonAxisSettings>
+                                    <Grid visible={true}/>
+                                </CommonAxisSettings>
+                                {
+                                    systems.map(function (item) {
+                                        return <Series key={item.value} valueField={item.value} name={item.name}/>;
+                                    })
+                                }
+                                <Margin bottom={20}/>
+                                <ArgumentAxis
+                                    allowDecimals={false}
+                                    axisDivisionFactor={60}
+                                >
+                                    <Label>
+                                        <Format type="decimal"/>
+                                    </Label>
+                                </ArgumentAxis>
+                                <Legend
+                                    verticalAlignment="top"
+                                    horizontalAlignment="right"
+                                />
+                                <Export enabled={true}/>
+                                <Tooltip enabled={true}/>
+                            </Chart>
+                        </React.Fragment>
+                    </div>
+                    <div className={'col-sm-2'}>
+                        <h1 style={{fontSize: 28 + 'px'}}>Предупреждения</h1>
+                        <TextArea
+                            height={700}
+                            width={450}
+                        value={channelRecs}/>
+                    </div>
                 </div>
-                <div style={selectedIndex === 1 ? {} : {visibility: 'hidden', height: 0 + 'rem'}}>
-                    <React.Fragment>
-                        <Chart
-                            palette="Violet"
-                            dataSource={bitloads}
-                            title="Нагрузка на долото"
-                        >
-                            <CommonSeriesSettings
-                                argumentField="dateString"
-                                type={this.state.type}
-                            />
-                            <CommonAxisSettings>
-                                <Grid visible={true}/>
-                            </CommonAxisSettings>
-                            {
-                                values.map(function (item) {
-                                    return <Series key={item.value} valueField={item.value} name={item.name}/>;
-                                })
-                            }
-                            <Margin bottom={20}/>
-                            <ArgumentAxis
-                                allowDecimals={false}
-                                axisDivisionFactor={60}
+                <div className={'row'} style={selectedIndex === 1 ? {} : {visibility: 'hidden', height: 0 + 'rem'}}>
+                    <div className={'col-sm-10'}>
+                        <React.Fragment>
+                            <Chart
+                                palette="Violet"
+                                dataSource={bitloads}
+                                title="Нагрузка на долото"
                             >
-                                <Label>
-                                    <Format type="decimal"/>
-                                </Label>
-                            </ArgumentAxis>
-                            <Legend
-                                verticalAlignment="top"
-                                horizontalAlignment="right"
-                            />
-                            <Export enabled={true}/>
-                            <Tooltip enabled={true}/>
-                        </Chart>
-                    </React.Fragment>
+                                <CommonSeriesSettings
+                                    argumentField="dateString"
+                                    type={this.state.type}
+                                />
+                                <CommonAxisSettings>
+                                    <Grid visible={true}/>
+                                </CommonAxisSettings>
+                                {
+                                    values.map(function (item) {
+                                        return <Series key={item.value} valueField={item.value} name={item.name}/>;
+                                    })
+                                }
+                                <Margin bottom={20}/>
+                                <ArgumentAxis
+                                    allowDecimals={false}
+                                    axisDivisionFactor={60}
+                                >
+                                    <Label>
+                                        <Format type="decimal"/>
+                                    </Label>
+                                </ArgumentAxis>
+                                <Legend
+                                    verticalAlignment="top"
+                                    horizontalAlignment="right"
+                                />
+                                <Export enabled={true}/>
+                                <Tooltip enabled={true}/>
+                            </Chart>
+                        </React.Fragment>
+                    </div>
+                    <div className={'col-sm-2'}>
+                        <h1 style={{fontSize: 28 + 'px'}}>Предупреждения</h1>
+                        <TextArea
+                            height={700}
+                            width={450}
+                            value={bitloadRecs}/>
+                    </div>
                 </div>
             </div>
         );
