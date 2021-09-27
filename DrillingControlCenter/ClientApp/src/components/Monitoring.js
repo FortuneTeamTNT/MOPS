@@ -16,6 +16,9 @@ import {
 } from 'devextreme-react/chart';
 import {Tabs, TextArea} from "devextreme-react";
 import axios from "axios";
+import { channeldata } from './channels.js';
+import { serverchartdata } from './servercharts.js';
+import { bitloaddata } from './bitloads.js';
 
 export const tabs = [{
     'id': 1,
@@ -61,25 +64,25 @@ export class Monitoring extends React.Component {
     }
 
     async populateData() {
-        const response = await fetch('channeldata');
-        const data = await response.json();
-        this.setState({channels: data});
+        // const response = await fetch('channeldata');
+        // const data = await response.json();
+        this.setState({channels: channeldata});
 
         let channelRecs = "";
-        const channelRecsArray = data.filter(d => d.alert !== 0);
+        const channelRecsArray = channeldata.filter(d => d.alert !== 0);
         channelRecsArray.forEach(d => channelRecs += d.dateString + ": " + d.recommendation + "\n\n");
         this.setState({channelRecs: channelRecs});
 
-        const response2 = await fetch('serverchartdata');
-        const data2 = await response2.json();
-        this.setState({servercharts: data2});
+        // const response2 = await fetch('serverchartdata');
+        // const data2 = await response2.json();
+        this.setState({servercharts: serverchartdata});
 
-        const response3 = await fetch('bitloaddata');
-        const data3 = await response3.json();
-        this.setState({bitloads: data3});
+        // const response3 = await fetch('bitloaddata');
+        // const data3 = await response3.json();
+        this.setState({bitloads: bitloaddata});
 
         let bitloadRecs = "";
-        const bitloadRecsArray = data3.filter(d => d.alert !== 0);
+        const bitloadRecsArray = bitloaddata.filter(d => d.alert !== 0);
         bitloadRecsArray.forEach(d => bitloadRecs += d.dateString + ": " + d.recommendation + "\n\n");
         this.setState({bitloadRecs: bitloadRecs});
     }
@@ -258,10 +261,10 @@ export class Monitoring extends React.Component {
     };
 
     async getData(formData) {
-        const response = await axios.post("serverchartdata", formData, {
-            headers: {'Content-Type': 'multipart/form-data'}
-        });
-        const data = await response.data;
-        this.setState({servercharts: data, loading: false});
+        // const response = await axios.post("serverchartdata", formData, {
+        //     headers: {'Content-Type': 'multipart/form-data'}
+        // });
+        // const data = await response.data;
+        this.setState({servercharts: serverchartdata, loading: false});
     }
 }

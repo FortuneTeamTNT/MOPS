@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import {Button} from "devextreme-react";
 import DataGrid, {Column, Scrolling, Pager, Paging, HeaderFilter} from 'devextreme-react/data-grid';
 import './Styles.css';
+import { serverdata } from './servers.js';
 
 const allowedPageSizes = [5, 10, 'all'];
 
@@ -96,9 +97,9 @@ export class ServerData extends Component {
     }
 
     async populateServerData() {
-        const response = await fetch('serverdata');
-        const data = await response.json();
-        this.setState({servers: data, loading: false});
+        // const response = await fetch('serverdata');
+        // const data = await response.json();
+        this.setState({servers: serverdata, loading: false});
     }
 
     onFileChange = event => {
@@ -127,10 +128,10 @@ export class ServerData extends Component {
     };
 
     async getData(formData) {
-        const response = await axios.post("serverdata", formData, {
-            headers: {'Content-Type': 'multipart/form-data'}
-        });
-        const data = await response.data;
-        this.setState({servers: data, loading: false});
+        // const response = await axios.post("serverdata", formData, {
+        //     headers: {'Content-Type': 'multipart/form-data'}
+        // });
+        // const data = await response.data;
+        this.setState({servers: serverdata, loading: false});
     }
 }
