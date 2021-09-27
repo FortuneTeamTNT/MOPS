@@ -7,9 +7,6 @@ import {CostCalculation} from "./CostCalculation";
 export const tabs = [{
     'id': 1,
     'text': 'Вероятность отказов'
-}, {
-    'id': 2,
-    'text': "Расчет стоимости скважин"
 }];
 
 export class AnalyticData extends React.Component {
