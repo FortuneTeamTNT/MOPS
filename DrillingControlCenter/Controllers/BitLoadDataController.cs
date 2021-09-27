@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using DrillingControlCenter.Data;
 using ExcelDataReader;
-using LiteDB;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

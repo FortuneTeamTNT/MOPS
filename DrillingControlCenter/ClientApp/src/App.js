@@ -6,6 +6,7 @@ import {Monitoring} from './components/Monitoring';
 import {AnalyticData} from './components/AnalyticData';
 import {ItData} from "./components/ItData";
 import {ReferenceData} from "./components/ReferenceData";
+import {MlData} from "./components/MlData";
 
 import './custom.css'
 import 'devextreme/dist/css/dx.light.css';
@@ -21,6 +22,7 @@ export default class App extends Component {
                 <Route path='/monitoring' component={Monitoring}/>
                 <Route path='/analytic-data' component={AnalyticData}/>
                 <Route path='/reference-data' component={ReferenceData}/>
+                <Route path='/ml-data' component={MlData}/>
             </Layout>
         );
     }

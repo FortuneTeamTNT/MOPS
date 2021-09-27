@@ -42,7 +42,6 @@ export class ChannelData extends Component {
                 >
                     <HeaderFilter visible={true}/>
                     <Column caption="Дата" dataField="dateString" cellRender={cellRender} width={8 + 'rem'}/>
-                    <Column caption="Система" dataField="system" cellRender={cellRender} width={12 + 'rem'}/>
                     <Column caption="Время отклика сетевого устройства" dataField="responseTime" cellRender={cellRender}
                             width={10 + 'rem'}/>
                     <Column caption="Предупреждение" dataField="alert" cellRender={cellRender} width={10 + 'rem'}/>

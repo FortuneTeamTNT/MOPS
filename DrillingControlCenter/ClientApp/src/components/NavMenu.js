@@ -50,6 +50,10 @@ export class NavMenu extends Component {
                                     <NavLink tag={Link} className="text-dark" to="/reference-data">Справочные
                                         данные</NavLink>
                                 </NavItem>
+                                <NavItem>
+                                    <NavLink tag={Link} className="text-dark"
+                                             to="/ml-data">Прогнозирование</NavLink>
+                                </NavItem>
                             </ul>
                         </Collapse>
                     </Container>
