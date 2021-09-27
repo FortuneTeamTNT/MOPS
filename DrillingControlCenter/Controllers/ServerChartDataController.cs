@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using DrillingControlCenter.Data;
 using ExcelDataReader;
-using LiteDB;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +15,7 @@ namespace DrillingControlCenter.Controllers
         [HttpGet]
         public IEnumerable<ServerChartData> Get()
         {
-            using var db = new LiteDatabase(@"drilling.db");
+            var db = Program.GetDatabase();
             var col = db.GetCollection<ServerChartData>("servercharts");
 
             return col.Query().ToList();
@@ -27,7 +26,7 @@ namespace DrillingControlCenter.Controllers
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
-            using var db = new LiteDatabase(@"drilling.db");
+            var db = Program.GetDatabase();
             var col = db.GetCollection<ServerChartData>("servercharts");
             col.DeleteAll();
 

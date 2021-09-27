@@ -19,8 +19,6 @@ namespace DrillingControlCenter.Data
 
         public int Alert { get; set; }
 
-        public int Rec { get; set; }
-
         public string Recommendation { get; set; }
     }
 }
